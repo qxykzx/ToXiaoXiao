@@ -51,8 +51,8 @@
                 android:id="@+id/math"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/call"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/imageUser"
                 android:text="数学" />
 
             <Button
@@ -61,7 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/imageUser"
-                android:text="上网" />
+                android:text="上网"
+                android:background="@android:color/holo_green_light"/>
 
             <Button
                 android:id="@+id/call"
@@ -69,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/picture"
                 android:layout_toLeftOf="@+id/picture"
+                android:background="@android:color/holo_blue_dark"
                 android:text="电话" />
 
             <Button
