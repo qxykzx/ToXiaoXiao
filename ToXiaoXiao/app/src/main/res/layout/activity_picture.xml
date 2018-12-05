@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <ImageView
+        android:id="@+id/picture_ImageView"
+        android:layout_width="match_parent"
+        android:layout_height="229dp"
+        android:background="@drawable/xiaoxiao" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <ImageView
+        android:id="@+id/picture_enlargeImageView"
+        android:layout_width="400dp"
+        android:layout_height="160dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Space
+            android:layout_width="100dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/picture_openCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="打开相机" />
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/picture_choosePicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="选择图片" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="透明度" />
+
+                <SeekBar
+                    android:id="@+id/transparencyBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="明暗度" />
+
+                <SeekBar
+                    android:id="@+id/intensityBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+            </TableRow>
+        </TableLayout>
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,7 +1,6 @@
 package com.qx.toxiaoxiao;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -25,6 +24,9 @@ public class internetActivity extends Activity {
             public void onClick(View view) {
                 EditText editTextInternet = (EditText)findViewById(R.id.internet_webaddr);
                 String address = editTextInternet.getText().toString();
+                if(!address.contains("http://")){
+                    address = "http://"+address;
+                }
                 WebView webView = (WebView)findViewById(R.id.internet_webview);
                 webView.getSettings().setJavaScriptEnabled(true);
                 webView.setWebViewClient(new WebViewClient(){

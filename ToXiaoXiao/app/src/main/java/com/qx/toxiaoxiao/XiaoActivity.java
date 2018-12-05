@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class XiaoActivity extends AppCompatActivity {
 
@@ -38,5 +37,16 @@ public class XiaoActivity extends AppCompatActivity {
             }
         });
         internetButton.getBackground().setAlpha(200);
+
+        //picture
+        Button pictureButton = (Button)findViewById(R.id.picture);
+        pictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(XiaoActivity.this, PictureActivity.class);
+                startActivity(intent);
+            }
+        });
+        pictureButton.getBackground().setAlpha(200);
     }
 }
