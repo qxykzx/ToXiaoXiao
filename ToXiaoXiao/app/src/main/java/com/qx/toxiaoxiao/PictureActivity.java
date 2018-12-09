@@ -30,7 +30,8 @@ public class PictureActivity extends Activity {
     private  Button openCemara;
     private  Button choosePicture;
     private ImageView imageView;
-    private Uri imageUri;
+    private static Uri imageUri;
+    private static Uri imageOutputUri;
 
     @Override
     protected void onCreate(Bundle saveInstanceState){
@@ -55,6 +56,19 @@ public class PictureActivity extends Activity {
                     e.printStackTrace();
                     return;
                 }
+
+                //创建File对象，用于存储拍照后的照片
+                File cropOutputImage = new File(Environment.getExternalStorageDirectory(), "tempCropImage.jpg");
+                try{
+                    if(cropOutputImage.exists()){
+                        cropOutputImage.delete();
+                    }
+                    cropOutputImage.createNewFile();
+                }catch (IOException e){
+                    e.printStackTrace();
+                    return;
+                }
+                imageOutputUri = Uri.fromFile(cropOutputImage);
                 startActionCapture(PictureActivity.this, outputImage, TAKE_PHOTO);
             }
         });
@@ -74,17 +88,38 @@ public class PictureActivity extends Activity {
         switch(requestCode){
             case TAKE_PHOTO:
                 if (resultCode == RESULT_OK) {
-                Intent intent = new Intent("com.android.camera.cation.CROP");
-                intent.setDataAndType(imageUri,"image/*");
-                intent.putExtra("scale",true);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                startActivityForResult(intent, CROP_PHOTO); //启动剪裁程序
+                    Intent intent = new Intent();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//重要的，，，
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //添加这一句表示对目标应用临时授权该Uri所代表的文件
+                    }
+                    intent.setAction("com.android.camera.action.CROP");
+                    intent.setDataAndType(imageUri, "image/*");// mUri是已经选择的图片Uri
+                    // 下面这个crop = true是设置在开启的Intent中设置显示的VIEW可裁剪
+                    //intent.putExtra("crop", "true");
+                    // aspectX aspectY 是宽高的比例，这里设置的是正方形（长宽比为1:1）
+                    //intent.putExtra("aspectX", 1);// 裁剪框比例
+                    //intent.putExtra("aspectY", 1);
+                    // outputX outputY 是裁剪图片宽高
+                    intent.putExtra("outputX", 150);// 输出图片大小
+                    intent.putExtra("outputY", 150);
+                    //裁剪时是否保留图片的比例，这里的比例是1:1
+                    intent.putExtra("scale", true);
+                    //是否是圆形裁剪区域，设置了也不一定有效
+                    //intent.putExtra("circleCrop", true);
+                    //设置输出的格式
+                    intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+                    //是否将数据保留在Bitmap中返回
+                    intent.putExtra("return-data", true);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageOutputUri);
+                    startActivityForResult(intent, CROP_PHOTO);
+
             }
                 break;
             case CROP_PHOTO:
                 if (resultCode == RESULT_OK){
                     try {
-                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+                        imageView.setBackgroundResource(0);
+                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageOutputUri));
                         imageView.setImageBitmap(bitmap);
                     }catch(FileNotFoundException e) {
                         e.printStackTrace();
@@ -142,6 +177,7 @@ public class PictureActivity extends Activity {
         } else {
             uri = Uri.fromFile(file);
         }
+        imageUri = uri;
         return uri;
     }
 
